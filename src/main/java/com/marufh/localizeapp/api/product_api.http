@@ -2,7 +2,6 @@ POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-  "id":"4028800b717935010171793549a60000",
    "name":"Product default name",
    "productLocals":{
       "en":{
