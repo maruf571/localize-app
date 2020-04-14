@@ -11,7 +11,7 @@ product name and description will be change based on the language.
 ## Build, test and run
 ```
 $ mvn clean install
-$ docker-compose up
+$ docker-compose up --build --remove-orphans
 ```
 
 ## Request & Response
