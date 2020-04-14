@@ -1,0 +1,43 @@
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "id":"4028800b717935010171793549a60000",
+   "name":"Product default name",
+   "productLocals":{
+      "en":{
+         "name":"product1 localize name",
+         "description":"product1 localize Description",
+         "language":{
+            "code":"en"
+         }
+      },
+      "bn":{
+         "name":"পণ্য ১ লোকালাইজ নাম",
+         "description":"পণ্য ১ লোকালাইজ বর্ননা",
+         "language":{
+            "code":"bn"
+         }
+      }
+   }
+}
+
+###
+
+GET http://localhost:8080/api/products/lang/bn
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/api/products/lang/en
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/api/products/id/<put-product-id>/lang/en
+
+###
+GET http://localhost:8080/api/products/id/<put-product-id>/lang/bn
+
+###
+DELETE http://localhost:8080/api/products/id/<put-product-id>
