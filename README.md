@@ -25,8 +25,6 @@ POST /api/products
          "name":"product1 localize name",
          "description":"product1 localize Description",
          "language":{
-            "id":"4028800b7177fc0f017177fc23030000",
-            "name":"English",
             "code":"en"
          }
       },
@@ -34,8 +32,6 @@ POST /api/products
          "name":"পণ্য ১ লোকালাইজ নাম",
          "description":"পণ্য ১ লোকালাইজ বর্ননা",
          "language":{
-            "id":"4028800b7177fc0f017177fc23180001",
-            "name":"Bengali",
             "code":"bn"
          }
       }
