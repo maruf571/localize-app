@@ -120,8 +120,9 @@ GET /api/products/id/4028800b717805310171780540ce0002/lang/en
    }
 }
 ```
-
+### Update product
 PUT /api/products
+
 Body = 
 ```
 {
