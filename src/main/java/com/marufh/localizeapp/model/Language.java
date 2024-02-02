@@ -1,10 +1,9 @@
 package com.marufh.localizeapp.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 
 @Setter
 @Getter
@@ -20,9 +19,9 @@ public class Language {
     @Column(length = 32)
     private String id;
 
-    @Column(length = 32)
+    @Column(length = 32, unique = true)
     private String name;
 
-    @Column(length = 2)
+    @Column(length = 2, unique = true)
     private String code;
 }

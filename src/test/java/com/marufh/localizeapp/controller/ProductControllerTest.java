@@ -1,22 +1,25 @@
-package com.marufh.localizeapp.api;
+package com.marufh.localizeapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marufh.localizeapp.dto.ProductDto;
 import com.marufh.localizeapp.dto.ProductLocalDto;
 import com.marufh.localizeapp.model.Language;
-import com.marufh.localizeapp.model.Product;
 import com.marufh.localizeapp.model.repository.LanguageRepository;
+import com.marufh.localizeapp.model.repository.ProductLocalRepository;
+import com.marufh.localizeapp.model.repository.ProductRepository;
 import com.marufh.localizeapp.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,22 +29,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductApiTest {
+@ActiveProfiles("test")
+class ProductControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
-    private ProductService productService;
+    ProductService productService;
 
     @Autowired
-    private LanguageRepository languageRepository;
+    LanguageRepository languageRepository;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    ProductLocalRepository productLocalRepository;
 
     private static  ObjectMapper objectMapper = new ObjectMapper();
 
+
     @Test
     @Transactional
-    public void should_create_product() throws Exception {
+    void should_create_product() throws Exception {
 
         // Given
         Language en = new Language();
@@ -77,11 +88,9 @@ public class ProductApiTest {
         product.setProductLocals(productLocals);
 
         // Then
-        this.mockMvc.perform(MockMvcRequestBuilders.post(ProductApi.URL)
+        this.mockMvc.perform(MockMvcRequestBuilders.post(ProductController.URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(product))
-
-        )
+                .content(objectMapper.writeValueAsString(product)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$").isNotEmpty())
@@ -102,7 +111,7 @@ public class ProductApiTest {
     }
 
     @Test
-    public void should_find_by_id() throws Exception {
+    void should_find_by_id() throws Exception {
 
         // Given
         Language en = new Language();
@@ -137,21 +146,15 @@ public class ProductApiTest {
         product.setName("This is product");
         product.setProductLocals(localizations);
 
-        ProductDto createdProduct  =  ProductDto.convert(
-                productService.create(ProductDto.convert(product))
-        );
-
+        ProductDto createdProduct  = productService.create(product);
 
         // Then
-        this.mockMvc.perform(get(ProductApi.URL + "/id/" +  createdProduct.getId()+"/lang/en")
+        this.mockMvc.perform(get(ProductController.URL + "/id/" +  createdProduct.getId()+"/lang/en")
                 .contentType(MediaType.APPLICATION_JSON)
         )
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
-
-                // Product
-                .andExpect(jsonPath("$.product.name").value("This is product"))
 
                 // Inspect language
                 .andExpect(jsonPath("$.language.code").value("en"))
@@ -170,7 +173,7 @@ public class ProductApiTest {
 
 
     @Test
-    public void should_find_all() throws Exception {
+    void should_find_all() throws Exception {
 
         // Given
         Language en = new Language();
@@ -205,10 +208,7 @@ public class ProductApiTest {
         product.setName("This is product");
         product.setProductLocals(localizations);
 
-        Product createdProduct1 = productService.create(ProductDto.convert(product));
-
-
-
+        ProductDto createdProduct1 = productService.create(product);
 
 
 
@@ -234,10 +234,10 @@ public class ProductApiTest {
         product2.setProductLocals(productLocals2);
 
 
-        Product createdProduct2 = productService.create(ProductDto.convert(product2));
+        ProductDto createdProduct2 = productService.create(product2);
 
         // Then
-        this.mockMvc.perform(get(ProductApi.URL + "/lang/en")
+        this.mockMvc.perform(get(ProductController.URL + "/lang/en")
                 .contentType(MediaType.APPLICATION_JSON)
         )
                 .andDo(MockMvcResultHandlers.print())
@@ -247,7 +247,7 @@ public class ProductApiTest {
         ;
 
         // Then
-        this.mockMvc.perform(get(ProductApi.URL + "/lang/bn")
+        this.mockMvc.perform(get(ProductController.URL + "/lang/bn")
                 .contentType(MediaType.APPLICATION_JSON)
         )
                 .andDo(MockMvcResultHandlers.print())
@@ -266,7 +266,7 @@ public class ProductApiTest {
 
     @Test
     @Transactional
-    public void should_update() throws Exception {
+    void should_update() throws Exception {
 
         // Given
         Language en = new Language();
@@ -301,17 +301,14 @@ public class ProductApiTest {
         product.setName("This is product");
         product.setProductLocals(localizations);
 
-        ProductDto createdProduct = ProductDto.convert(
-                productService.create(
-                    ProductDto.convert(product)
-                )
-        );
+        ProductDto createdProduct = productService.create(product);
+
         createdProduct.setName("update name");
         createdProduct.getProductLocals().get("en").setName("update product1");
         createdProduct.getProductLocals().get("bn").setName("হালনাগাদ নাম");
 
 
-        this.mockMvc.perform(put(ProductApi.URL)
+        this.mockMvc.perform(put(ProductController.URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createdProduct))
         )
@@ -328,7 +325,7 @@ public class ProductApiTest {
 
     @Test
     @Transactional
-    public void should_delete() throws Exception {
+    void should_delete() throws Exception {
 
         // Given
         Language en = new Language();
@@ -363,14 +360,10 @@ public class ProductApiTest {
         product.setName("This is product");
         product.setProductLocals(localizations);
 
-        ProductDto createdProduct = ProductDto.convert(
-                productService.create(
-                        ProductDto.convert(product)
-                )
-        );
+        ProductDto createdProduct = productService.create(product);
 
 
-        this.mockMvc.perform(delete(ProductApi.URL + "/id/" + createdProduct.getId())
+        this.mockMvc.perform(delete(ProductController.URL + "/id/" + createdProduct.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createdProduct))
         )

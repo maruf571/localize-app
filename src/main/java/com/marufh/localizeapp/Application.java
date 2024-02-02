@@ -13,27 +13,4 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-
-	@Bean
-	public CommandLineRunner loadData(LanguageRepository repository) {
-		return (args) -> {
-
-			// Save language
-			Language enExist = repository.findByCode("en");
-			if(enExist == null) {
-				Language enLanguage = new Language();
-				enLanguage.setCode("en");
-				enLanguage.setName("English");
-				repository.save(enLanguage);
-			}
-
-			Language bnExist = repository.findByCode("bn");
-			if(bnExist == null) {
-				Language bnLanguage = new Language();
-				bnLanguage.setCode("bn");
-				bnLanguage.setName("Bengali");
-				repository.save(bnLanguage);
-			}
-		};
-	}
 }
