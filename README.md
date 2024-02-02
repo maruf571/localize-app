@@ -3,8 +3,8 @@ This is POC of a server side application design. Localize app means, for example
 product name and description will be change based on the language. 
 
 ## Tech 
-- java 1.8
-- spring-boot 2.*
+- java 17
+- spring-boot 3.*
 - spring data jpa and
 - mySQL
 
