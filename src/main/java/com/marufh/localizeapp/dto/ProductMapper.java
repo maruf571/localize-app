@@ -2,7 +2,6 @@ package com.marufh.localizeapp.dto;
 
 import com.marufh.localizeapp.model.Product;
 import com.marufh.localizeapp.model.ProductLocal;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 

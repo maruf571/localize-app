@@ -2,13 +2,11 @@ package com.marufh.localizeapp.controller;
 
 import com.marufh.localizeapp.dto.ProductDto;
 import com.marufh.localizeapp.dto.ProductLocalDto;
-import com.marufh.localizeapp.model.ProductLocal;
 import com.marufh.localizeapp.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
