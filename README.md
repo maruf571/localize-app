@@ -3,8 +3,9 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=maruf571_localize-app&metric=bugs)](https://sonarcloud.io/summary/new_code?id=maruf571_localize-app)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=maruf571_localize-app&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=maruf571_localize-app)
 
-This is POC of a server side application design. Localize app means, for example e-commerce 
-product name and description will be change based on the language. 
+This is POC of a server side application. The idea of the POC is that how we can 
+build localize app, meaning that application name, description and other filed will be language specific. 
+For example e-commerce product name and description will be change based on the user language. 
 
 ## Tech 
 - java 17
