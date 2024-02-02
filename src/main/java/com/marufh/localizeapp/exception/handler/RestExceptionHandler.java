@@ -1,5 +1,7 @@
-package com.marufh.localizeapp.exception;
+package com.marufh.localizeapp.exception.handler;
 
+import com.marufh.localizeapp.exception.ExceptionDto;
+import com.marufh.localizeapp.exception.ProductException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
