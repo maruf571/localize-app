@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public class ProductMapper {
 
+    private ProductMapper() {
+    }
+
     public static Product convert(ProductDto dto) {
         Product product = new Product();
         product.setId(dto.getId());

@@ -7,6 +7,9 @@ import java.util.Optional;
 
 public class ProductLocalMapper {
 
+    private ProductLocalMapper() {
+    }
+
     public static ProductLocal convert(ProductLocalDto dto) {
         ProductLocal pl = new ProductLocal();
         pl.setId(dto.getId());
